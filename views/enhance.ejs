@@ -1,0 +1,23 @@
+<% title = 'Enhance' %>
+
+<h2>Content Enhancement</h2>
+
+<div class="alert alert-info">
+  <strong>Polish your writing!</strong><br>
+  Paste any existing marketing copy here, and our AI will rewrite it to be more engaging and persuasive.
+</div>
+
+<form method="POST">
+  <div class="mb-3">
+    <label for="inputText" class="form-label">Paste your content to enhance:</label>
+    <textarea name="inputText" id="inputText" class="form-control" rows="4"></textarea>
+  </div>
+  <button class="btn btn-primary">Enhance Content</button>
+</form>
+
+<% if (options) { %>
+  <h4>Enhanced Results</h4>
+  <% options.forEach(opt => { %>
+    <textarea class="form-control mb-2" rows="3"><%= opt %></textarea>
+  <% }) %>
+<% } %>

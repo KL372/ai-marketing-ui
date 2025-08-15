@@ -1,0 +1,178 @@
+<% title = 'Channel Recommendation' %>
+
+<div class="container py-4">
+  <!-- What this page does -->
+  <!-- Info Alert (stays at top) -->
+  <div class="alert alert-info mb-4">
+    <strong>What does this do?</strong><br>
+    Fill in the fields below to generate a <b>ready-to-use marketing post</b> for your chosen platform.
+    <br><i>💡 Be specific for better results!</i>
+    <ul class="mb-0 mt-2">
+      <li><b>Stage</b>: Where in your funnel? (e.g., awareness, consideration)</li>
+      <li><b>Channel</b>: Where to post? (Twitter, Email, LinkedIn, etc.)</li>
+    </ul>
+  </div>
+  
+  <!-- Hero (visual intro) -->
+  <!-- HERO: Modern two-column hero section -->
+  <div class="row align-items-center mb-5">
+    <div class="col-lg-6 text-center text-lg-start mb-3 mb-lg-0">
+      <h1 class="display-4 fw-bold mb-3" style="letter-spacing:-1px;">
+        Supercharge Your <span class="text-primary">Marketing</span>
+      </h1>
+      <p class="lead mb-4 text-muted">Generate high-converting, personalized content for every channel — powered by AI.</p>
+    </div>
+    <div class="col-lg-6 text-center">
+      <img src="/images/hero-illustration.svg" alt="AI Marketing Illustration" class="img-fluid" style="max-height:220px;">
+    </div>
+  </div>
+
+  <!-- Form card (inputs for stage/channel/context) -->
+  <div class="d-flex justify-content-center mb-5">
+    <div class="card p-4 shadow-lg border-0" style="max-width: 820px; width: 100%; border-radius: 20px; background: #fff;">
+      <h2 class="mb-3 fw-bold" style="color:#1e40af;">
+        <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary me-2" style="font-size:1.1em;">1</span>
+        Enter Your Campaign Details
+      </h2>
+
+      <!-- Funnel Stage Guide -->
+      <div class="alert alert-secondary mb-4">
+        <h6 class="fw-bold mb-2">📈 Funnel Stages Explained</h6>
+        <ul class="mb-0">
+          <li><b>Awareness:</b> Make people aware your product exists. Focus on reach and brand recognition.</li>
+          <li><b>Consideration:</b> Give more details and show why you’re the right choice. Share comparisons, testimonials, and benefits.</li>
+          <li><b>Conversion:</b> Encourage people to take action — buy, sign up, or request a demo. Use urgency, offers, and strong calls-to-action.</li>
+        </ul>
+      </div>
+
+      <!-- POST form to /channel (controller will call /generate) -->
+      <form method="POST" id="genForm">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <!-- Stage -->
+            <label class="form-label">📈 Funnel Stage</label>
+            <select name="stage" class="form-select" required>
+              <option value="awareness" <%= stage === 'awareness' ? 'selected' : '' %>>awareness</option>
+              <option value="consideration" <%= stage === 'consideration' ? 'selected' : '' %>>consideration</option>
+              <option value="conversion" <%= stage === 'conversion' ? 'selected' : '' %>>conversion</option>
+            </select>
+          </div>
+
+          <!-- Channel -->
+          <div class="col-md-6">
+            <label class="form-label">📣 Channel</label>
+            <select name="channel" class="form-select" required>
+              <option value="Twitter" <%= channel === 'Twitter' ? 'selected' : '' %>>Twitter</option>
+              <option value="LinkedIn" <%= channel === 'LinkedIn' ? 'selected' : '' %>>LinkedIn</option>
+              <option value="Email" <%= channel === 'Email' ? 'selected' : '' %>>Email</option>
+              <option value="Instagram" <%= channel === 'Instagram' ? 'selected' : '' %>>Instagram</option>
+            </select>
+          </div>
+
+          <!-- Product / Target / Industry / Objective -->
+          <div class="col-md-6">
+            <label class="form-label">🎯 Product</label>
+            <input name="product" class="form-control" required placeholder="e.g. Eco Bottle" value="<%= typeof product !== 'undefined' ? product : '' %>">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">👥 Target Audience</label>
+            <input name="target_audience" class="form-control" required placeholder="e.g. Urban commuters, students" value="<%= typeof target_audience !== 'undefined' ? target_audience : '' %>">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">🏷️ Industry</label>
+            <input name="industry" class="form-control" required placeholder="e.g. Ecommerce, Retail" value="<%= typeof industry !== 'undefined' ? industry : '' %>">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">📌 Marketing Objective</label>
+            <input name="marketing_objective" class="form-control" required placeholder="e.g. Drive awareness, engagement" value="<%= typeof marketing_objective !== 'undefined' ? marketing_objective : '' %>">
+          </div>
+          <!-- Background / Benefits -->
+          <div class="col-12">
+            <label class="form-label">🏢 Business Background</label>
+            <textarea name="business_background" class="form-control" rows="2" required placeholder="e.g. We are a startup making reusable bottles for eco-conscious city dwellers."><%= typeof business_background !== 'undefined' ? business_background : '' %></textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label">🌿 Product Benefits</label>
+            <textarea name="benefits" class="form-control" rows="2" required placeholder="e.g. Reusable, eco-friendly, fits in bags, stylish" ><%= typeof benefits !== 'undefined' ? benefits : '' %></textarea>
+          </div>
+
+          <!-- Optional fine-tuning fields -->
+          <div class="col-12">
+            <label class="form-label">🎨 Style (optional)</label>
+            <input
+              name="style"
+              id="styleInput"
+              class="form-control"
+              placeholder="e.g. Witty, poetic, storytelling, call-to-action"
+              value="<%= typeof style !== 'undefined' ? style : '' %>"
+            >
+          </div>
+          <div class="col-12">
+            <label class="form-label">🎤 Tone (optional)</label>
+            <input
+              name="tone"
+              id="toneInput" 
+              class="form-control"
+              placeholder="e.g. Formal, casual, playful, professional"
+              value="<%= typeof tone !== 'undefined' ? tone : '' %>"
+            >
+          </div>
+          <div class="col-12">
+            <label class="form-label">📝 Additional Instructions (optional)</label>
+            <textarea
+              name="more_instructions"
+              id="moreInstructionsInput"  
+              class="form-control"
+              rows="2"
+              placeholder="e.g. Avoid hashtags, write as a Q&A, include a joke, use emojis, or any special request"
+            ><%= typeof more_instructions !== 'undefined' ? more_instructions : '' %></textarea>
+          </div>
+        </div>
+
+        <!-- Loading Spinner (controlled by channelControl.js) -->
+        <div id="loading" class="text-center mb-4" style="display:none;">
+          <div class="spinner-border text-primary" role="status"></div>
+          <p class="text-muted mt-2">Generating your content...</p>
+        </div>
+
+        <!-- Submit button -->
+        <button id="generateBtn" class="btn btn-primary btn-lg mt-4 w-100">
+          🚀 Generate Marketing Copy
+        </button>
+      </form>
+    </div>
+  </div>
+
+   <!-- Error banner (if backend returned an error) -->
+  <% if (error) { %>
+    <div class="alert alert-danger mt-4"><%= error %></div>
+  <% } %>
+
+  <!-- Results: rendered when options are available -->
+  <% if (options) { %>
+    <div id="results-section">
+      <h4 class="mt-5 mb-3">📝 Generated Marketing Copy</h4>
+      <% options.forEach((opt, i) => { %>
+        <div class="card mb-3 shadow result-card animate__animated animate__fadeInUp" style="border-radius: 18px;">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Option <%= i+1 %></h5>
+            <% if (opt.hook && opt.hook.trim() !== "") { %>
+              <p><b>Hook:</b> <%= opt.hook %></p>
+            <% } %>
+            <% if (opt.body_text && opt.body_text.trim() !== "") { %>
+              <p><b>Body:</b> <%= opt.body_text %></p>
+            <% } %>
+            <% if (opt.call_to_action && opt.call_to_action.trim() !== "") { %>
+              <p><b>Call to Action:</b> <%= opt.call_to_action %></p>
+            <% } %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
+
+<!-- Animations + page JS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<script src="/js/channelControl.js" defer></script>
+

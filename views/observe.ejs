@@ -1,0 +1,21 @@
+<% title = 'Observe' %>
+
+<h2>Real-World Examples</h2>
+
+<div class="alert alert-info">
+  <strong>See what works!</strong><br>
+  Explore sample marketing campaigns and posts for different products, channels, and funnel stages.
+</div>
+
+<form method="POST">
+  <button class="btn btn-primary">Show Examples</button>
+</form>
+
+<% if (options) { %>
+  <h4>Results</h4>
+  <% options.forEach(opt => { %>
+    <textarea class="form-control mb-2" rows="3"><%= opt %></textarea>
+  <% }) %>
+<% } %>
+
+

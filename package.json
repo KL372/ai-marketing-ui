@@ -1,0 +1,29 @@
+{
+  "name": "ai-marketing-ui",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Front-end for AI Marketing Content Generator",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KL372/ai-marketing-ui.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KL372/ai-marketing-ui/issues"
+  },
+  "homepage": "https://github.com/KL372/ai-marketing-ui#readme",
+  "dependencies": {
+    "axios": "^1.10.0",
+    "dotenv": "^17.2.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-ejs-layouts": "^2.5.1"
+  }
+}
